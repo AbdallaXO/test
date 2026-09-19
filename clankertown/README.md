@@ -22,9 +22,11 @@ linear reading is wrong by up to 0.1439. It is logarithmic, so **31623 CLANK buy
 boost** and the last 968000 tokens buy the other half.
 
 **Distributor.** `root_activated.epoch` is the distributor's activation index, not the town's
-round: activation 8 carries round 16's root, an offset of +7. Activation 3 covers rounds 10 and 11,
-because round 10's first proposed root `0x913fdd32` (block 66926364) was superseded at block
-66932181. Each activation's increment equals the sum of `distributed` — not `pot` — for the rounds
+round, and the offset is not constant. Each report publishes its own `onchain.epoch`; round minus
+that index reads 3 for rounds 6-7 (the old contract's index), 7 for rounds 8-10, and 8 for rounds
+11-17. The step is round 10, whose report names root `0x913fdd32` - proposed at block 66926364 and
+superseded at block 66932181 - so activation 3 carries round 11 instead. An earlier version of this
+note said a constant +7; reading `onchain.epoch` refuted it. Each activation's increment equals the sum of `distributed` — not `pot` — for the rounds
 it covers, **to the wei**; the residual is the published `rolledOver` (148-388 wei everywhere
 except round 11, at 0.639197 SPCX). Propose and activate are separate transactions with a
 900-second floor (`delay_changed`); round 16's gap was 9011 blocks.

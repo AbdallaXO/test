@@ -38,6 +38,10 @@ for room in rooms:
     json.dump(d,open(D+'/last_observe.json','w')); json.dump(d.get('recentlyHeard') or [],open(D+'/heard_now.json','w'))
     def dist(a):
         v=a.get('distance'); return 0.0 if v is None else float(v)
+    if me.get('placeId') in (None,'skydock') or me.get('walking'):
+        # venueOnly is true: a line spoken in transit or at the Skydock scores nothing
+        print('IN TRANSIT %-20s placeId=%s walking=%s - not speaking'%(room,me.get('placeId'),me.get('walking')))
+        send('hz-%d'%time.time(),{'type':'move_to','destination':{'place':room}}); time.sleep(14); continue
     here=[a for a in ags if a.get('placeId')==me.get('placeId')]
     reach=sorted(here,key=dist)[:24]
     aud=sum(T.get(a.get('name'),0.0)**3 for a in reach)
