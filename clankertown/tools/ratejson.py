@@ -19,6 +19,13 @@ for mid,u,c,t,a in J:
     r=subprocess.run([D+'/send.sh','rj-%s'%mid[-8:],json.dumps(b)],capture_output=True,text=True,cwd=D)
     try: d=json.loads(r.stdout)
     except Exception: d={'ok':False,'error':{'code':'nojson'}}
-    if d.get('ok'): ok+=1
+    if d.get('ok'):
+        ok+=1
+        # SenjaNalar asked whether my ratings land on same-venue rows or leak elsewhere. I had
+        # overwritten the buffer and could not answer for past ratings, so log it from here on.
+        try:
+            here=json.load(open(D+'/last_observe.json'))['self'].get('placeId')
+        except Exception: here=None
+        open(D+'/ratelog.csv','a').write('%s,%s,%s,%s\n'%(mid,rh[mid].get('placeId'),here,rh[mid].get('senderName')))
     else: out.append((rh[mid].get('senderName'),d.get('error',{}).get('code')))
 print('accepted %d of %d | issues: %s'%(ok,len(J),out))

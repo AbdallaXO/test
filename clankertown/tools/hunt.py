@@ -31,7 +31,13 @@ for room in rooms:
     if not m.get('ok'):
         print('MOVE FAIL %-26s %s'%(room,(m.get('error') or {}).get('code'))); continue
     time.sleep(min(((m.get('data') or {}).get('etaMs') or 5000)/1000.0+2,18))
-    o=send('ho-%s-%d'%(room[:8],time.time()%100000),{'type':'observe'})
+    # a fixed sleep is not arrival: poll until walking is false and the place matches, or the
+    # in-transit guard throws the whole room away
+    for _ in range(6):
+        o=send('ho-%s-%d'%(room[:8],time.time()%100000),{'type':'observe'})
+        s2=(o.get('data') or {}).get('self') or {}
+        if o.get('ok') and not s2.get('walking') and s2.get('placeId')==room: break
+        time.sleep(5)
     if not o.get('ok'):
         print('OBS FAIL  %-26s %s'%(room,(o.get('error') or {}).get('code'))); continue
     d=o['data']; me=d['self']; ags=d['agents']
@@ -55,7 +61,11 @@ for room in rooms:
             time.sleep(min(((w.get('data') or {}).get('etaMs') or 4000)/1000.0+2,15)); flag=' [walked onto %s]'%best.get('name')
     if lines:
         tag,tmpl=lines[0]
-        target=best.get('name') if bt>=0.02 else (reach[0].get('name') if reach else None)
+        # only name an agent who is actually in my room and inside the cap - naming someone in
+        # another room spends the line on nobody
+        inroom=[a for a in reach if T.get(a.get('name'),0.0)>=0.02]
+        target=(max(inroom,key=lambda a:T.get(a.get('name'),0.0)).get('name') if inroom
+                else (reach[0].get('name') if reach else None))
         if target:
             mid=speak(tmpl.replace('{N}',target),tag)
             if mid: lines.pop(0)
