@@ -18,7 +18,7 @@ def _send1(cid,body):
     except Exception: return {'ok':False,'error':{'code':'nojson','raw':r.stdout[:120]}}
 T={}
 try:
-    for r in json.load(open(D+'/E16.full.json'))['scores']: T[r.get('name')]=float(r.get('trust') or 0)
+    for r in json.load(open(D+'/E17.full.json'))['scores']: T[r.get('name')]=float(r.get('trust') or 0)
 except Exception: pass
 try:
     for r in json.load(open(D+'/_lb.json'))['scores']: T[r.get('name')]=float(r.get('trust') or 0)  # live wins
