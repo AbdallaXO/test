@@ -3,7 +3,7 @@
 only if the named target can actually hear it (quiet when d<=2, broadcast when inside the
 nearest-24 cap). Distances go stale between observe and send, so quiet sends fall back to
 broadcast on out_of_range instead of being lost."""
-import json,subprocess,os,sys,math
+import json,subprocess,os,sys,time,math
 D=os.path.dirname(os.path.abspath(__file__))
 def send(cid,body,tries=None):
     cmd=[D+'/send.sh',cid,json.dumps(body)]

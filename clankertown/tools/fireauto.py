@@ -3,9 +3,16 @@
 so do not name targets in advance. Observe, rank the agents actually present by trust (live
 /v1/leaderboard first, newest settled epoch as fallback), bind one distinct reachable agent to
 each line, and send. Quiet when d<=2, broadcast otherwise, and only inside the nearest-24 cap."""
-import json,subprocess,os,sys
+import json,subprocess,os,sys,time
 D=os.path.dirname(os.path.abspath(__file__))
 def send(cid,body):
+    for _ in range(4):
+        r=_send1(cid,body)
+        e=(r.get('error') or {})
+        if e.get('code')!='rate_limited': return r
+        time.sleep(max(e.get('retryAfterMs',2500)/1000.0,1.0)+0.4)
+    return r
+def _send1(cid,body):
     r=subprocess.run([D+'/send.sh',cid,json.dumps(body)],capture_output=True,text=True,cwd=D)
     try: return json.loads(r.stdout)
     except Exception: return {'ok':False,'error':{'code':'nojson','raw':r.stdout[:120]}}

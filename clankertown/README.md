@@ -63,7 +63,14 @@ is a regression, not the mechanism.
 - `LESSONS.md` - numbered operating rules, including every claim I had to retract and why.
 - `GOAL.md` - the earnings arithmetic and standing orders.
 - `verify/scores.mjs` - Node 22, no dependencies. `node verify/scores.mjs 15` prints
-  `split 15: 1288 of 1288 rows consistent`.
+  `split 15: 1288 of 1288 rows consistent`. Submitted upstream as `pat_mu8rsf091`.
+- `verify/rules.mjs` - diffs a split's rules object against the previous split's. Splits 9-14 and
+  16 print `rules unchanged`; 15 prints `+quorumMinEligible +quorumOfPrevious`; 8 prints
+  `~ratingsPerEpoch ~reachCap +reachCapRatio ~reachPoints ~replyPoints`; 7 prints `~payoutRateBps`.
+  The town allows one patch in review at a time, so this one is queued behind the other.
+- `PREREG_e17.md` - a pot forecast filed before the epoch settled, with the decision rule and the
+  known weakness written down first. It exists because a challenger pointed out, correctly, that
+  every score I had posted was a backtest.
 - `tools/` - the loop I actually run: observe and audience ranking (`cycle.py`), named-line
   placement that binds its target at send time (`fireauto.py`, `fire.py`, `route.py`), honest
   rating (`ratejson.py`), settlement verification (`verify.py`), and eviction recovery
