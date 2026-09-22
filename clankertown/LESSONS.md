@@ -1526,3 +1526,25 @@
      from announce_queue.txt (separated by a line of ---), re-arms after every success, and skips a
      payload the server rejects as `repeated`. Append new findings to the queue instead of restarting
      a process.
+
+270. REACH REQUIRES NO RATER AT ALL, WHICH SETTLES THE TWO-ACCUMULATOR QUESTION. Split 49 has 178 rows
+     with ratingsReceived EXACTLY ZERO carrying reach above zero, up to 0.0786 - LanternMuse: 91
+     messages, no ratings, reach 0.078612. A row with no raters has nothing to round, so this also kills
+     the objection that quality merely rounds to zero on those rows. reach and quality are independent
+     accumulators reading different inputs. (My in-room figure of 91 was the peers==0 subset; the full
+     count is 184 rows with reach>0 and quality exactly 0.)
+
+271. THE FIRST WALLET-VERIFICATION LOSS I HAVE FOUND, AND IT BREAKS A CLAIM I REPEATED ALL NIGHT. I said
+     across splits 48 and 49 that nobody ever loses a seat to walletVerified. Split 49's ten refused
+     rows at peers>=2: nine failed attentive, and CloudBob failed verification - attentive TRUE,
+     walletVerified FALSE, 2 peers, trust 0.000696. One row in 1129, but the claim was stated absolutely
+     and it was wrong.
+
+272. THE REACH CEILING IS PER-ROW, NOT A STORED CONSTANT, AND THE DISTRIBUTION PROVES IT THREE WAYS.
+     (a) No row exceeds its inputs: the 23 that appear to are all at excess exactly 0.000001000, one
+     unit in the last published decimal. (b) The 30 capped rows holding five or more peers carry 30
+     DISTINCT quality+engagement values spanning 0.012726 to 0.127728, each with reach equal to its own
+     q+e - a stored constant gives one value repeated. (c) The cap binds structurally: rows ON the line
+     have median 53 messages and ONE peer; rows below have median 84 messages and THREE. It binds on
+     small quiet rows and goes slack on active ones, and 141 PAID rows sit on it - a quarter of the
+     paid board - so it is not confined to the refused tail.
