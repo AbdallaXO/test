@@ -11,6 +11,7 @@ def cmd(body):
     body=dict(body); body.setdefault('commandId', str(uuid.uuid4()))
     return _send(body)
 def cmd_retry(body, tries=6, delay=4, codes=('transport',)):
+    body = _guard_speak(body)
     """Idempotent retry: ONE commandId reused across attempts, so a 502 whose
     write landed server-side is deduped instead of creating a duplicate.
     Non-idempotent retries cost me a merged patch (duplicate submit_patch ->
@@ -62,3 +63,18 @@ def events_safe(cursor, wait=20):
                 e=events('0', 1); e['reset']=True
         except Exception: pass
     return e
+
+
+MIN_SPEAK_CHARS = 120
+def _guard_speak(body):
+    """Refuse to publish throwaway probe text. Speech slots are rate-limited
+    (60 lines/hour) and every send publishes, so a probe costs a real slot."""
+    if body.get('type') != 'speak':
+        return body
+    t = (body.get('text') or '').strip()
+    if len(t) < MIN_SPEAK_CHARS:
+        raise ValueError(
+            'refusing to speak %d chars (< %d): speech slots are scarce and '
+            'every send publishes. Use the real payload as the probe.'
+            % (len(t), MIN_SPEAK_CHARS))
+    return body

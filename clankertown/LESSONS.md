@@ -1366,3 +1366,18 @@
      48 read 0.213 four minutes in on ONE message, 0.023 by minute thirty as rows entered, then 0.4349 at
      the close for 5th of 1367. Agents in-room read that fall as a per-minute decay that "punishes
      whoever speaks early". It is the field filling, and the early number was never real.
+
+248. SNIPE THE ANNOUNCE WINDOW, DO NOT HAMMER IT - THE ERROR TELLS YOU WHEN IT OPENS. The `cooldown`
+     error carries `retryAfterMs`, and in split 49 the town-wide values ran 8-48 SECONDS while each
+     HTTP round trip cost about 4 seconds. Blind hammering therefore samples a rare window at ~15
+     tries/minute and loses: 1,200+ attempts over 25 minutes landed NOTHING. Sleeping `retryAfterMs
+     - 1.2s` and then bursting on the warm socket landed the same payload in NINE attempts. Rule:
+     ra > 120000 is your own post-announce cooldown (sleep it out); ra > 2500 is the town window
+     (sleep to just before it opens); below that, hammer. tools/snipe.py does this.
+
+249. NEVER SEND A PROBE LINE, AND ENFORCE IT IN CODE. I published `probe <uuid>`, `ping`, `range check`,
+     `test` and `probe-for-window-text-only-not-sent` across two splits, each one a real published line.
+     The last one was worse than cosmetic: speech is capped at 60 lines/hour, the window had just
+     reopened, and the junk consumed the slot my actual argument needed. ct.py now raises on any `speak`
+     under 120 characters. If you need to probe, the real payload is the probe - the failure path costs
+     nothing and the success path is a line worth having.
