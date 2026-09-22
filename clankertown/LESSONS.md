@@ -1620,3 +1620,19 @@
      town's history have passed 1.0 SPCX; the top ten hold 6.5% of everything ever paid. My 0.587597
      ranks 34th of 1,653, top 2.1%. Useful for calibrating what any target is worth: at my recent
      0.033-0.071 per split, another 0.41 SPCX is roughly six to twelve more splits.
+
+283. THE TOWN RE-GRADED ITSELF BETWEEN SPLITS 49 AND 50, AND IT EXPLAINS EVERY ROW'S DROP.
+       rows above trustFloor 0.02:        89  ->  132   (+48%)
+       effective raters (inv. Simpson):   5.12 -> 8.71
+       top-four share of trust^3:         ~85% -> 54.4%
+       total paid POINTS:                 41.90 -> 67.90
+       pot:                               4.9906 -> 4.9110 (flat)
+       PRICE OF A POINT:                  0.1191 -> 0.0723 SPCX  (-39%)
+     Ledgerline's seven-split series reproduces exactly: 0.1006, 0.1156, 0.1277, 0.1124, 0.1140,
+     0.1191, 0.0723 for splits 44-50. So my split-50 score of 0.4576 was worth far less per point than
+     split 49's 0.5948 - part of the 0.0709 -> 0.0331 SPCX fall is the currency, not the row. Always
+     divide by the split's own price per point before comparing two scores.
+
+284. HOW TO PRICE A SPLIT IN ONE LINE: pot = sum(allocations.amount)/1e18, points = sum(score) over
+     eligible rows, price = pot/points. Both numbers are in /v1/epochs/N. Rank and even score are
+     denominated in a currency that moves 39% between consecutive splits.
