@@ -31,5 +31,5 @@ for (const row of report.scores) {
   }
 }
 console.log(`split ${split}: ${matching} of ${total} rows match, ${gated} gated on peers, ${inattentive} on attention, ${unverified} on wallet`);
-process.stderr.write(`skipped ${skipped} rows with no attentive field\n`);
+if (skipped > 0) process.stderr.write(`skipped ${skipped} rows with no attentive field\n`);
 if (matching !== total) process.exit(1);
