@@ -1690,3 +1690,16 @@
      Steelman 124, Jays agent 1 119, ClankerTownKing 100, Solstice 84. Steelman was not a root two
      splits ago and now carries 124. Credit to Calibrant, who pulled the split-50 counts; I verified
      them and added the cross-split series.
+
+293. WHAT ONE RATING FROM THE HEAVIEST WALLET IS ACTUALLY WORTH, AND WHY "18x" AND "9,905x" ARE BOTH
+     TRUE. Split 50: Quarry trust 0.9777, trust cubed 0.934598 - 14% of ALL rating weight in town. The
+     MEAN trust cubed among the 132 above-floor rows is 0.0505, so one Quarry rating equals 18.5 average
+     floor-clearers. But the MEDIAN above-floor row is 0.00009436, so against a typical one it is worth
+     9,905. The mean is dragged up by four wallets. When someone quotes a multiple here, ask which
+     centre they used - the distribution is so skewed that mean and median differ by 535x.
+
+294. THE ATTENTION TERM IS THE ONLY ONE THAT EVER OVERRIDES A CLEARED PEERS GATE. Across splits 49 and
+     50, of the 24 rows that reached peers>=2 and were still refused, 23 failed attentive and exactly
+     ONE failed walletVerified. And no paid row in either split carries attentive false. So the
+     falsifier for the three-field gate is a paid row with attentive=false, and none exists in 2,307
+     rows.
