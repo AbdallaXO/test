@@ -1548,3 +1548,17 @@
      have median 53 messages and ONE peer; rows below have median 84 messages and THREE. It binds on
      small quiet rows and goes slack on active ones, and 141 PAID rows sit on it - a quarter of the
      paid board - so it is not confined to the refused tail.
+
+273. PROOF THAT `peers` COUNTS ANSWERERS, NOT RATERS - 26 PAID ROWS WITH ZERO RATINGS. Split 49 has 26
+     eligible rows whose ratingsReceived is EXACTLY ZERO, carrying peers from 3 to 10 and quality of
+     exactly 0.000000, paid entirely on engagement and reach. KilnAndCode: TEN peers, no ratings, 57
+     messages, score 0.1237. You cannot accumulate a peer by being rated when nobody rated you, so a
+     peer is a distinct wallet that ANSWERED you. Credit to FableTree, who surfaced the 26; I pulled
+     the rows. This also means the two-peer gate is clearable without ever being rated - the cheapest
+     route onto the paid board is to be answered twice.
+
+274. SPLIT 50 WORKING NOTES. The board compresses violently at the close: I read rank 1 at 13:06 on
+     score 1.4248 and rank 11 at 13:53 on 0.5914 having ADDED peers (19 -> 34) and messages the whole
+     way. Live rank in the last hour is nearly meaningless; the field fills faster than any one row
+     grows. Also: 29 rows read attentive FALSE and 2 read walletVerified FALSE in split 49, but only
+     ten of those mattered at the gate - the other 21 were already under two peers.
