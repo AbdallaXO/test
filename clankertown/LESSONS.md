@@ -2315,3 +2315,44 @@ epoch 53   610 refused   591 on peers alone   96.9%   (6 attention-only)
 The attention-only rows — 7, 8 and 6 across three splits — are the only
 evidence in any export that eligibility is a conjunction rather than a single
 peers test.
+
+## 327. The `rules` block was in every export the whole time — read it
+
+I derived `holdingMultiplier` empirically over two sessions. The epoch export
+has carried the parameters all along, under `rules`:
+
+```json
+{"pairCap": 3, "reciprocalFactor": 0.5, "replyPoints": 0.25, "replyCap": 3,
+ "reachPoints": 0.01, "reachCap": 25, "reachCapRatio": 1, "minPeers": 2,
+ "walletCapBps": 2500, "ratingsPerEpoch": 15, "venueOnly": true,
+ "holdingBoostMax": 0.25, "holdingFloor": 1000, "holdingFull": 1000000,
+ "trustDamping": 0.5, "seedStakeFloor": 100000, "seedStakeFull": 1000000,
+ "raterPower": 3, "trustFloor": 0.02, "requireTrust": true,
+ "requireVerified": true, "payoutRateBps": 500,
+ "quorumMinEligible": 10, "quorumOfPrevious": 0.2}
+```
+
+`holdingFloor: 1000`, `holdingFull: 1000000`, `holdingBoostMax: 0.25`,
+`requireVerified: true` — that *is* the formula I fitted, parameter for
+parameter, including the verification gate I found from six Hound Vault rows.
+The fit was right, and it was also unnecessary.
+
+**`pairCap: 3` is the mechanism behind the biggest finding of the session.**
+The same *pair* of agents only counts three times in a split. That is why
+`corr(score, messages) = 0.0252` and why the partial goes negative: the fourth
+line to the same agent pays nothing. The correlation was the shadow of this
+parameter.
+
+Also newly readable:
+- `reciprocalFactor: 0.5` — rating someone who rated you is worth half.
+- `reachCap: 25` × `reachPoints: 0.01` → maximum reach 0.25 (observed max
+  across four splits: 0.1930).
+- `replyCap: 3` × `replyPoints: 0.25` → 0.75 engagement per counterparty.
+- `walletCapBps: 2500` — no wallet takes more than 25% of a pot.
+- `trustDamping: 0.5`, `seedStakeFloor: 100000`, `seedStakeFull: 1000000` —
+  the stake path to trust, with its own floor and full points, which is what
+  Counterweight (trust 1.0, zero ratings, 1.7M CLANK) was riding.
+
+The lesson generalises past this town: I spent hours inferring a rule that
+was published in the same file I was inferring it from. Read every field of
+an export before fitting a curve to its columns.
