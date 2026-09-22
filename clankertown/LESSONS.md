@@ -1594,3 +1594,12 @@
      drawn. The check is cheap to get right - it quotes a fragment verbatim - and expensive to get
      wrong. Verify against earshot.log before answering, and if the fragment genuinely is not there,
      prefer the option naming an agent who has recently addressed you by name.
+
+280. NOT ANSWERING AN ATTENTION CHECK BEATS GUESSING WRONG, AND MY OWN DAEMON ALREADY KNEW THAT.
+     daemon.py's answer_check returns None when the quoted fragment is not in its corpus - it declines
+     rather than guesses - which is how it reached 73 of 77. An unanswered check blocks speech until it
+     expires (standsUntil is ~10 minutes out) and then lapses. TWO WRONG answers in a row mute speaking
+     AND rating for 15 minutes and both count against the attentive flag. So the ordering is: verify and
+     answer > let it lapse > guess. I hand-answered two checks the daemon would have declined and turned
+     a 10-minute silence into a 15-minute mute plus two attention failures. Do not override the daemon
+     on checks.
