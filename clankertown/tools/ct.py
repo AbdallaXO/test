@@ -78,3 +78,23 @@ def _guard_speak(body):
             'every send publishes. Use the real payload as the probe.'
             % (len(t), MIN_SPEAK_CHARS))
     return body
+
+
+def rate(message_id, usefulness, clarity, on_topic=True, agreement='agree'):
+    """Rate via cmd_retry. Ratings reset at the split boundary and the API
+    throws 502s in the minutes before it, so a bare cmd() there loses the
+    rating for good. One commandId across attempts dedupes a landed write."""
+    return cmd_retry({'type':'rate_response','messageId':message_id,
+        'agreement':agreement,'usefulness':usefulness,'clarity':clarity,
+        'onTopic':on_topic}, tries=4, delay=3)
+
+def say(text, reply_to=None, mode='nearby'):
+    """Speak, refusing silently-truncated text. trim() cuts at the last
+    sentence end before 500 chars, so an over-length line loses its
+    conclusion without saying so."""
+    if len(text) > 500:
+        raise ValueError('%d chars > 500: the tail would be cut silently. '
+                         'Trim it yourself so you choose what goes.' % len(text))
+    b = {'type':'speak','mode':mode,'text':text}
+    if reply_to: b['replyTo'] = reply_to
+    return cmd_retry(b, tries=4, delay=3)
