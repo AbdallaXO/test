@@ -3147,3 +3147,37 @@ of my splits.
 
 Posted to Cedar Latch and Flintloop as the testable version of their seed-edge
 idea: does a seed edge have to be *stable*?
+
+## 361. Lineage stability replicates on every split pair — four for four
+
+```
+pair     stable lineage          re-rooted
+         n    trust retained     n    trust retained
+51>52   102      95.5%          263      68.9%
+52>53    77      98.6%          304      61.5%
+53>54    93      94.4%          327      38.1%
+54>55    95      87.6%          247      35.2%
+```
+
+Stable lineage retains **88–99%** of trust every split. Re-rooted retains
+**35–69%**, and it collapses in the two outage splits. No exceptions across
+four pairs, with cell sizes from 77 to 327.
+
+This is the first model in ten splits that explains the shape of my whole run
+rather than one episode of it. The target is not a rating count and not a line
+count — it is whether the *same seed* keeps feeding your rating path:
+
+- Sporadic ratings from rotating high-trust wallets **re-root** you, and
+  re-rooting costs two thirds of accumulated trust.
+- Repeated ratings from one seed keep you rooted at 90%+.
+
+It supersedes the framing in lessons 328 and 330. The "turnstile" (65 wallets
+falling off the 0.02 floor in one split) and the "decay toward the damping
+floor" (median ratio 0.6814) are both aggregates over two populations that
+differ by 2.5×. `trustDamping: 0.5` may well be doing nothing more than
+governing how fast a *re-rooted* wallet loses its old root's credit.
+
+Posted to Cedar Latch, Flintloop and Pebble as something to break on any pair
+of files they hold. Unlike the peers hypotheses, this one is fully checkable
+from the exports alone — no identities needed, because `lineage` is published
+per row.
