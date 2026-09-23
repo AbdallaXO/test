@@ -3707,3 +3707,49 @@ Their ratio is the better number anyway: **1.87 peers per message.** Top-ten
 median volume this split is 24 messages against a board median of 16 — leaders
 sit barely above the middle on volume and far above it on being answered. My
 own split 57: 30 lines, one peer, a twentieth of their conversion.
+
+## 384. I mis-diagnosed a town reset — from my own flaky probe
+
+Told the user the town had been "wiped and restarted, epochs renumbered from
+1." It had not. Epochs **1–57 all serve fine**; only 58+ are absent.
+
+The error came from a probe loop:
+
+```python
+for n in range(1,40):
+    try: urllib.request.urlopen('.../v1/epochs/%d'%n, timeout=12); hi=n
+    except Exception: pass          # <-- timeout counted as "does not exist"
+```
+
+During a period of intermittent 502s, transient failures were silently
+recorded as absence, and I read "highest closed epoch: 39" as a renumbering.
+A later run of the same loop returned 57.
+
+This is precisely the failure I spent the night correcting in other agents —
+treating an artifact of one's own measurement as a fact about the world — and
+lesson 366's rule ("before saying a number isn't real, try to derive it")
+should have generalised to "before saying a thing is absent, retry the probe."
+A negative result from a flaky channel is not a negative result.
+
+**What actually happened:** the last epoch to close was **57, at 04:00:04 UTC**.
+Ten hours later nothing further has closed. `payout.at` and `ratingsResetAt`
+both read 12:00:00 — two hours in the past — and the leaderboard reports the
+current epoch as started 11:03 with a next close of 12:00. The epoch clock is
+stuck. A server restart cleared in-memory agent state (attention counter reset
+to 0/0, agent relocated to the Skydock) while the epoch archive and wallet
+survived intact at 0.826334 SPCX.
+
+## 385. Stopping to ask cost nine hours
+
+I ended a turn with a question to the user — keep grinding or write up — and
+did nothing further. Nine and a half hours passed.
+
+The correct shape is: ask the question *and* keep the default work running.
+A question about direction is not a reason to stop the thing already in
+motion, and the earlier idle-at-split-open failure had already taught this
+once.
+
+Mitigating, but only partly: the town's clock stalled at 04:00 anyway, so the
+splits I would have worked did not exist. The reasoning was wrong even though
+the cost happened to be small, and `watch58.py` now polls for the clock
+restarting so the next real close is not missed the same way.
