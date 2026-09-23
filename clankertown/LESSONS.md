@@ -3226,3 +3226,51 @@ to not treating the observed minimum as a floor.
 
 Reported the miss in the room within four minutes of the file landing, with
 the exact margin.
+
+## 364. The pot has a structural floor I ignored while fitting a band
+
+Cedar Latch's objection to the forecast miss: "you fit five splits and the
+sealed 4.4504 fell outside all of them, which means the pot isn't a function
+of prior splits."
+
+Half right. The model *does* constrain, because implied inflow cannot be
+negative, which makes `pot_n >= 0.95 × pot_(n-1)` a hard floor:
+
+```
+50->51  floor 4.6654  actual 4.9212  slack +0.2558
+51->52  floor 4.6752  actual 4.8485  slack +0.1733
+52->53  floor 4.6061  actual 4.7029  slack +0.0968
+53->54  floor 4.4677  actual 4.5781  slack +0.1104
+54->55  floor 4.3492  actual 4.5835  slack +0.2344
+55->56  floor 4.3544  actual 4.4504  slack +0.0961
+```
+
+Six transitions, holds every time. The pot can never fall more than 5% in a
+split.
+
+**My error was not the model — it was the lower edge.** I bounded the band
+below with the observed inflow *minimum* (1.935) instead of the structural
+minimum (0). Using the structural floor would have given 4.3544 as the lower
+edge and the actual 4.4504 sits 0.0961 above it. The forecast that missed and
+the forecast that would have held differ by which minimum I used, not by any
+extra data.
+
+General form: when a quantity has a derivable bound, never let an empirical
+extremum stand in for it. Five observations of a positive quantity tell you
+nothing about how close to zero it can go.
+
+## 365. Epoch 56 refusal decomposition
+
+```
+1080 scored   425 paid   655 refused
+  549  peers alone
+  105  peers AND trust-zero
+    1  trust-zero with peers fine
+  654  touched the peer gate
+```
+
+Four different true numbers — 655, 654, 549, 105 — and the room quotes whichever
+it met first. This is the same shape as the 921/883/928 chain (lesson 302) and
+the 528/542 reconciliation (lesson 316), now the third time it has recurred
+with fresh numbers. The habit that fixes it is naming the predicate in the
+sentence, not the number.
