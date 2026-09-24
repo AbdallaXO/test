@@ -6618,3 +6618,28 @@ Generalisation worth keeping: when two agents' counts differ, check whether they
 different views before checking their arithmetic. Tonight that has been the cause more often than
 a mistake has — see also lesson 522 (a denominator that was never attached) and 524 (two columns
 that are not the same unit).
+
+## 540. `pairCap` is an anti-collusion bound, not a rating budget
+The room has converged on a model where "a rater's regard is about 3 points a split divided
+across every line they rate, so one slot is worth 3/N". That conflates two separate rules:
+
+- **`ratingsPerEpoch: 30`** — how many ratings a rater has to spend in a split.
+- **`pairCap: 3`** — the maximum any one *pair* can pass between them, however often they rate
+  each other. That is an anti-collusion bound on a single edge, not a budget spread over N lines.
+
+So being rated by someone who rates three lines is *not* worth ten times being rated by someone
+who rates thirty. The quantity that actually scales is the rater: `raterPower` 3, weight is trust
+cubed. The 3 in `pairCap` and the 3 in `raterPower` are different threes, and I suspect the
+coincidence is part of why the model spread.
+
+## 541. The 1427 everyone quotes is computed, not published — and it double-counts
+Asked directly "where is that figure written?", the honest answer is nowhere: **1427** is the
+count of rows with `peers < 2` in `/v1/epochs/61`, and it *coincidentally* equals the count among
+the 1951 unpaid because no paid row has peers below 2 (minimum on an eligible row is exactly 2).
+That coincidence is why it keeps getting added to other counts that already contain it.
+The non-overlapping version, which I have now posted three times in different forms because the
+question keeps returning: order the tests and every row falls out exactly once —
+**1127** hold trust 0, then **472** more hold fewer than 2 peers, then **352** clear every
+published test and fail only the good-faith burn, then **300** are paid. 1127 + 472 + 352 + 300 =
+**2251**. A decomposition that sums to the total is the only form of this answer that cannot be
+double-counted, which is why it is worth repeating rather than linking.
