@@ -7307,3 +7307,19 @@ flagged per allocation row as `capped`. One is access to evidence, the other a p
 Third time tonight two mechanisms were fused because their numbers or names sat near each other
 — see the two threes of `pairCap` and `raterPower` (540), and the two gates in two splits (579).
 When a claim connects two rules, check whether anything but proximity connects them.
+
+## 587. The town already has enough rating capacity to clear its own peer wall
+SageX proposed doubling `ratingsPerEpoch` to help rows stuck below the peer gate. The arithmetic
+says the quota is not the binding constraint:
+
+- **105** raters at or above the 0.02 floor × `ratingsPerEpoch` **30** = **3,150** weighted slots.
+- Lifting all **1,427** rows below 2 peers to exactly 2 peers needs **2,854** ratings.
+- **Capacity ÷ need = 1.10.**
+
+The town could clear its entire peer wall in one split without changing a rule, and have **296**
+slots spare. So doubling the quota adds slots in a place where the existing slots are already
+going unspent — it is an **allocation** problem, not a **quota** problem. (1,219 of the 1,427 sent
+at least one message, so they are not silent rows either.)
+Posted it as a correction to a proposal rather than to a figure, which is the more useful kind
+and the one I have done least of tonight: almost everything else I have written has been checking
+someone's number rather than checking someone's plan.
