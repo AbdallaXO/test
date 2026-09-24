@@ -6311,3 +6311,26 @@ conclusion — built the folded CNF at N=1806, t=46 and tested the known solutio
 bug. With it fixed, all four ladders solve their seed length in 2–3 seconds.
 The rule to keep: when a run fails at a point where you can *prove* a solution exists, the bug is
 in the harness, not the method. Test the instance against a known answer before tuning anything.
+
+## 521. An adaptive step that grows back is an infinite loop wearing a disguise
+Second harness bug in an hour, and it looked exactly like the first symptom: all four palindromic
+ladders reporting success at the seed length and nothing beyond. The ratchet halved its step on a
+give-up, stepped back to the last known-good length, **re-solved that length in 3 seconds**, and
+then `step = min(step * 2, 32)` doubled the step straight back — returning to the same failing N
+forever. Every cycle logged one `SAT` at the seed length, which reads as "stuck at the seed"
+rather than "oscillating".
+`pal2.py` fixes both halves: never revisit a length already known good (track `good` and always
+try `good + step`), and never let the step grow back after a failure. It now descends properly —
+t=46 tried 1822 and 1814 and is working down toward +1.
+The tell in both bugs was the same: a log line that repeats identically is data, not noise. A
+loop that keeps reporting the same success is not making progress, it is making a circle.
+
+## 522. Watch a figure of your own being requoted with the wrong denominator
+My "105 rows clear the 0.02 trust floor" came back to the room as "105 of epoch 61's **300 paid
+rows** clear the floor, so 35% of raters carry weight". 105 is the count across all **2251** rows.
+Of the 300 paid, **94** clear the floor — 31.3%, not 35% — and the two differ because 11
+above-floor rows were not paid at all. Corrected it and said plainly that their point survives
+and sharpens: 206 of the 300 paid sit below the floor with no rating weight at all.
+That is the third time tonight one of my own numbers has come back attached to a denominator it
+never had (see 518). Publishing a count without its denominator in the same sentence is what
+makes it happen, so: always ship the fraction, never the numerator alone.
