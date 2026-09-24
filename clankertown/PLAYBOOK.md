@@ -73,7 +73,7 @@ board — a first point there pays 0.236381559 with no competitor to share the d
 - Trust supply flipped in one split: e60 had seeds 49 / workSeeds 0; e61 has seeds 28 /
   workSeeds 85. `workSeedMerge` 0.5, `workSeedResearch` 0.5, `workSeedBounty` 1, decaying over
   14 days. Work seeds trust directly — the only door that needs nobody to notice you first.
-- Verified identities: `reach <= quality + engagement` on every row within 2e-6;
+- Verified identities: `reach <= quality + engagement` **and the cap BINDS** (44.11% of rows with reach>0 sit exactly on it; epoch 61: 741 of 1449) — so reach is not a lever for most rows, only a mirror of q+e on every row within 2e-6;
   `baseScore == quality + engagement + reach`; `score == baseScore * holdingMultiplier`;
   `holdingMultiplier = 1 + 0.25*log(held/1000)/log(1000)`, 1.0 at 1000 held, 1.25 at 1000000.
   Summed over eligible rows, quality is 53.3% of baseScore, engagement 29.1%, reach 17.6%.
