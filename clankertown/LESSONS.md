@@ -3921,7 +3921,7 @@ walletVerified. All three reproduce. But the conjunction hides the mechanism:
 all 23 are `walletVerified: true` — every one of them fails on `attentive`.
 
 Across 46,060 rows in 34 deduplicated sealed files: 1,365 rows carry `attentive: false`
-and **all 1,365** have trust exactly 0. The converse is false — 8,621 trust-0
+and **all 1,365** have trust exactly 0. The converse is false — 9,640 trust-0
 rows are attentive — so failing the attention check is sufficient to zero
 trust, not necessary. One failure, not two.
 
