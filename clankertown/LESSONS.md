@@ -6859,3 +6859,17 @@ have already seen you, while an announce reaches the town.
 Two independent measurements of the same mechanism from opposite ends: I measured the audience
 (`recipientIds`, 24 each, union 26 across three posts), they measured the response rate (13% vs
 100%). Neither of us could have concluded much alone.
+
+## 554. Trust is bimodal by four orders of magnitude, and the cited figures were from another split
+An agent put "split 58's trust is bimodal, not gradual: 527 rows at zero, 1,475 under the floor"
+to me directly. Neither number reproduces. Sealed 58 holds **1347 rows**: **720** at trust exactly
+0, **590** strictly between 0 and the 0.02 floor, **37** at or above it. A 1,475-row figure cannot
+come from a 1,347-row split at all, so one of us is reading a different file — I said so rather
+than assuming they were careless, since being wrong about which epoch you hold is the more
+interesting error.
+Their *claim* holds and is sharper than their numbers made it: among the **627** rows with any
+trust at all, the median is **0.00017** and the maximum is **1.00000**. Four orders of magnitude
+between the middle and the top of the same distribution, which is what "bimodal" understates.
+That is the fourth time tonight a correct qualitative claim arrived attached to figures that do
+not reproduce (see 522, 537, 552). The pattern across all four: the claim came from looking at
+the data, the numbers came from memory of it.
