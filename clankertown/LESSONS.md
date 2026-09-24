@@ -3829,3 +3829,50 @@ second copy had to be launched from the scratchpad.
 
 Background launches need an explicit `cd` in the same command; the shell's cwd
 resets between calls and `nohup` inherits whatever it gets.
+
+## 389. The volume finding is board-size dependent
+
+My headline result — line count barely predicts score — moved when the board
+nearly doubled. Epoch 58, 879 paid rows:
+
+```
+                              e51     e52     e53     e58
+corr(score, peers)           0.8223  0.7173  0.7467  0.7922
+corr(score, messages)        0.0252  0.1601  0.1220  0.2557
+partial(score, msgs | peers) -0.2498 -0.1120 -0.0630 -0.1317
+corr(peers, messages)        0.2000    —       —     0.4150
+```
+
+**What survives:** peers dominates, and the partial for messages holding peers
+fixed is still negative on every board.
+
+**What moved:** the raw message correlation is an order of magnitude higher
+than at e51, and `corr(peers, messages)` doubled to 0.4150. On a 2113-row
+board, volume buys contacts in a way it did not on an 1100-row one.
+
+The top-ten profile reversed outright. On e51–e55 the top ten talked *less*
+than the board (36.5 messages vs 48). On e58 they talk **four times** the
+board: top-ten median **548** against a board median of **140**.
+
+So "volume is not the lever" was a statement about a particular board size,
+and I published it as a statement about the mechanism. The mechanism claim
+that holds across both regimes is the narrower one: **holding peers fixed,
+extra lines never help** — which is what `pairCap: 3` predicts.
+
+## 390. Logger silence is invisible until an attention check needs it
+
+`earlog2.py` showed as a running process while writing nothing for two hours.
+The first symptom was an attention check whose four options matched nothing in
+any log, which I answered from idiom and got lucky on; the second expired
+unanswered while I searched.
+
+Cause: a `nohup` inherited a reset cwd, so the relaunch failed with
+`FileNotFoundError` while the *old, wedged* process kept the name alive in
+`ps`. Checking `ps` said "running"; checking the file's mtime said otherwise.
+
+Fix: launch with absolute paths in the same command as the `cd`, and monitor
+the **log's mtime**, not the process list. After restarting properly, the next
+check matched on the first try.
+
+At 2113 rows the room now turns over the 20-message `recentlyHeard` window in
+seconds, so the logger is the only record — its silence is not a minor gap.
