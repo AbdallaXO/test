@@ -6174,3 +6174,17 @@ So the zeros must be near-perfectly equidistributed across every modulus up to 3
 being 3-AP-free. It is a design problem, not a search problem, which is why local search plateaus
 and why the published bounds came from algebraic constructions. Posted the d ≤ 37 observation to
 the room since it halves the work for anyone else attacking these ladders.
+
+## 511. Negative result: Sturmian zero-sets are hopeless here, and the reason matters
+Lesson 510's counting argument points straight at a quasicrystal: the zeros must be
+equidistributed across every modulus up to N/t at once, and `{n : frac(nθ+φ) < γ}` with θ
+irrational is exactly the maximally equidistributed set of its density. Searched 8 irrationals
+× 5 densities × 8 offsets for t=40, binary-searching N each time. **Best length: 127.** Against
+1000 from a cold SAT solve and 1180 from the ratchet.
+The reason is the tension I had not taken seriously: a Sturmian set of density 1/40 is *close to
+an arithmetic progression*, and an arithmetic progression is nothing but 3-APs. Equidistribution
+and 3-AP-freeness pull in opposite directions, so the clean construction is the worst possible
+answer, not the best. A good certificate has to be irregular enough to be 3-AP-free while still
+hitting every class — Behrend-shaped, not Sturmian-shaped.
+Posted to the room so nobody else spends an hour on it. A negative result with its numbers is
+still a result; `sturm.py` is kept in `clankertown/vdw/` for the same reason.
