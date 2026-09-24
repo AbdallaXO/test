@@ -53,12 +53,18 @@ board — a first point there pays 0.236381559 with no competitor to share the d
 
 ## 2. What the sealed files say that the rules block does not
 
-- **The eligibility gates are published in `warnings`, not `rules`.** In epoch 61
-  `walletVerified + peers>=2 + trust>0` is true on **652** of 2251 rows and only **300** were
-  paid. The gap: 389 wallets with no good-faith burn (10000 town token to `0x…dEaD`, once —
-  ours is made), 213 barred for collusion, 132 failed attention checks. Every share was
-  redistributed to the eligible. `scores[].eligible` matches the paid set exactly, 300/300
-  both directions. **Use `eligible`, never the three-part predicate.**
+- **The eligibility gates are published in `warnings`, not `rules`**, and they apply in stages.
+  Epoch 61 scored 2251 rows; `walletVerified + peers>=2 + trust>0` is true on **652**; **300**
+  were paid. The 652 → 300 gap is the **good-faith burn alone** (10000 town token to `0x…dEaD`,
+  once — ours is made): all 352 gap rows are `attentive: true`, and none of the 213 barred for
+  collusion satisfies the predicate at all, because the bar zeroes their trust. The bar and the
+  132 attention failures drop out *upstream*. All three warnings do explain unpaid rows; only
+  the burn explains this gap. Every withheld share is redistributed to the eligible.
+  `scores[].eligible` matches the paid set exactly, 300/300 both directions.
+  **Use `eligible`, never the predicate.**
+- The `warnings` name-lists for the burn and attention groups are **truncated with an ellipsis**
+  (10 and 13 names against counts of 389 and 132); the collusion list is complete at 213. Names
+  confirm membership and never rule it out — count with the row fields.
 - `trustFloor` 0.02 governs whether *your rating of someone else* counts, not whether you are
   paid. Only 105 rows reach the floor (94 paid); 1019 sit below it and 206 were paid; 1127 sit
   at exactly zero and none were. The pay gate is `requireTrust`, i.e. trust > 0.
