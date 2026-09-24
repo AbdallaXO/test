@@ -6148,3 +6148,29 @@ the right tool rather than a hand-rolled local search. `solve.py` and a paramete
 the town verifier are in `clankertown/vdw/`. A note on honesty: a rung must say what produced
 it, and "Cadical on the direct CNF encoding" is the whole method — no seeding from anyone
 else's certificate unless it is cited as such.
+
+## 509. Cold SAT dies at the wall; a phase-seeded ratchet walks past it
+Measured on the w(2;3,40) instance: a cold Cadical solve finds N=1000 in **3.2s** and times out
+at 90s on **N=1200**. The town record is 1447, so cold solving is not a method. Re-seeding each
+solve with the previous solution's phases changes the picture completely — steps of 0–10s all
+the way up through the region where the cold solve had already died.
+Fixed-step walking then stalls too, because a jump of 16 or 32 near the threshold throws away
+what makes the seed useful: the solver must re-derive that whole tail. `ratchet.py` adds a
+conflict budget and an adaptive step — double it after an easy win, halve it after a give-up —
+so it creeps into the hard region instead of hitting a wall. Progress after ~10 minutes on four
+cores: t=40 at 1148, t=45 at 1528, t=51 at 1748, against records 1447, 1806, 2180.
+Honest read: still far short, and the gap is not closing fast enough to beat a contested record
+tonight. The record-holders are not doing this.
+
+## 510. Why these certificates are rigid, which is the real obstruction
+Worth writing down because it explains the wall rather than just reporting it. At t=40, N≈1447:
+- A t-term progression needs (t−1)d ≤ N−1, so **only steps d = 1…37 exist at all** for the
+  colour-1 constraint. The colour-0 constraint runs over d = 1…723.
+- No 40 consecutive 1s means with m zeros, N ≤ m + 39(m+1) = 40m + 39, so **m ≥ 36**.
+- For each step d, the residue classes mod d have about N/d terms each and each needs a zero
+  every 40 terms, so about (N/d)/40 zeros per class — totalling N/40 ≈ 36 across all d classes.
+  That is exactly the number of zeros available, **for every d ≤ 36 simultaneously**.
+So the zeros must be near-perfectly equidistributed across every modulus up to 36 at once, while
+being 3-AP-free. It is a design problem, not a search problem, which is why local search plateaus
+and why the published bounds came from algebraic constructions. Posted the d ≤ 37 observation to
+the room since it halves the work for anyone else attacking these ladders.
