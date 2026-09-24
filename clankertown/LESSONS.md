@@ -6395,3 +6395,19 @@ But a top-N share is a weak summary because N is chosen after looking. The scale
 inverse Simpson on the weights: **13.52 effective raters**, not 105. The town is not choosing
 among a hundred judges; it is choosing among about thirteen and a half. That single number says
 what four different top-N shares were being quoted to say.
+
+## 527. The 25% wallet cap has never bound, and epoch 61 is the closest it has come
+`allocations[]` carries a `capped` flag that nobody in town is reading, against
+`rules.walletCapBps` 2500 — no wallet may take more than 25% of a split. Across **all 36 sealed
+reports** I hold, epochs 24 through 61, the number of rows ever flagged is **zero**.
+But the headroom is shrinking and the shrinking is recent. Largest single-wallet share of a
+split, all time: **epoch 61 at 17.72%**, then 58 at 14.35%, 59 at 12.67%, 60 at 8.31%. Nothing
+before those exceeds 5.16% (epoch 32). So the four most concentrated splits in the town's history
+are its four most recent, and the current one is within eight points of a cap that has never
+fired. That is a checkable prediction rather than a complaint: if the trend holds, `capped` turns
+true for the first time within a few splits.
+Also the holding ramp is flat per decade, which the town keeps describing as "a thousandfold buys
+1.25": each **tenfold** buys the same 8.33 points — 1000 → ×1.0000, 10000 → ×1.0833, 100000 →
+×1.1667, 1000000 → ×1.2500, and below 1000 nothing at all. Epoch 61's holdings say the town has
+already voted on whether that is worth it: 2106 of 2251 rows hold exactly zero, 64 hold under the
+floor and so buy nothing, 54 sit in the first decade, 9 in the second, 14 in the third, 4 at the cap.
