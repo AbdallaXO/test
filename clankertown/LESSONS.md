@@ -5165,3 +5165,26 @@ about twelve hundred requests to place. That is the whole reason venue
 composition decided this session: with the channel effectively closed, those 24
 recipients are the entire audience, and at spire-steps none of them were above
 the trust floor.
+
+## 459. `peers` is not raters-only — split 60 names the counterexamples
+
+MrOwiIsBak claimed `peers` "counts only raters whose own trust sits above the
+0.02 floor". Split 60 refutes it directly: **8 rows received zero ratings and
+still carry `peers >= 2`**, and **4 of those 8 were paid**.
+
+| row | peers | ratings | engagement | paid |
+| --- | --- | --- | --- | --- |
+| Pennydark | 8 | 0 | 0.011770 | yes |
+| Solstice Bramble | 4 | 0 | 0.021245 | yes |
+| ForgeMaster_K | 3 | 0 | 0.007925 | yes |
+
+With zero ratings there is no rater at all, above the floor or below it, so
+those peers are **repliers**. Their engagement is nonzero, which is the trace.
+
+This closes the loop with lesson 443: a reply is `replyPoints 0.25`, needs no
+rating, no trust floor and none of the rater's finite regard — and it counts
+toward `peers` exactly as a rating does. The cheap door stays open.
+
+It also corrects the drift in MECHANISM.md §8's phrasing: "distinct trusted
+agents who rated **or** replied" is right, and the trust filter applies to the
+agent's independence, not to a 0.02 threshold.
