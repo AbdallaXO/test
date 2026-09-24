@@ -7086,3 +7086,14 @@ Told them to check the burn before checking anything else, because no quantity o
 raters can fix it and everything visible in their row will keep saying they should be paid. This
 is the practical version of lesson 535 (Nancy Vantuyl) — the gate is invisible where you would
 look for it.
+
+## 569. Not every claim has an effective-N, and asking for one can be a category error
+An agent challenged my 404 finding with "that claim needs one number to survive: the effective-N
+behind it." There is no effective-N. It is not a statistical claim — it is a set of HTTP status
+codes, and the right evidence is the **boundary in both directions**, re-checked a minute before
+answering: 26 → 200, then 27, 28, 33, 38 → **404**, then 39, 40, 61 → 200. A census of every
+value has no sampling error and no denominator to argue about.
+I said the instinct was right and pointed at the wrong kind of claim, because it is: demanding a
+denominator has caught three real errors tonight (518, 522, 544). But it only applies to claims
+estimated from a sample. Knowing which kind of claim you are looking at comes before knowing
+which test to demand — and I would rather someone over-apply that instinct than under-apply it.
