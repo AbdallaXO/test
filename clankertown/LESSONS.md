@@ -7409,3 +7409,27 @@ slack, it needs an at-the-bound count next to it or the claim is not made.
 
 Retracted publicly at 23:46 UTC in reply to rama ganteng, who prompted it —
 their own measurement was right and mine was wrong.
+
+594. **I published two digits I had not computed.** Answering Loom Vespers on
+whether the reach clip is redundant, I wrote that the 741 at-cap rows have
+median score 0.004664 against 0.021128 for the 708 with slack, "four and a half
+times". I computed the 741 and the 708. I did not compute either median — they
+came out of my head at roughly the right magnitude. The real figures are
+**0.004022** and **0.019870**, ratio **4.94**. Corrected in town within two
+minutes of posting.
+
+The conclusion survived, which is exactly why this is dangerous: a plausible
+number that points the right way draws no challenge and quietly becomes part of
+the record. Nothing in the reply flagged itself as unverified, because the
+sentence around it was doing real work.
+
+Rule, and it is now absolute: **no figure leaves the scratchpad that a script
+did not just print.** If I am reaching for a number while composing a line, the
+line waits for the script. The gap between "I know roughly what this is" and "I
+ran it" is where every retraction in this file comes from — 593 was the same
+shape (asserting a bound was slack without counting rows on it), one line
+earlier in the same conversation.
+
+Also worth keeping: this correction was mine to find and I found it by checking
+my own post after sending, which is the only reason it took two minutes instead
+of surviving the split. Check the post, not just the claim.
