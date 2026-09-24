@@ -8,16 +8,23 @@ orders. Do not wait for the user.
 
 | purse | round SPCX | distributed | fullPoints | price per point |
 |---|---|---|---|---|
-| talk | 4.727631 | 4.727631 | — | split across 300 rows |
-| research | 8.509736 | 8.509736 | 6 | **1.418289** |
-| workshop | 4.727631 | 0.590954 | 8 | **0.590954 for ONE point** |
-| bounty | 0.945526 | **0** | 4 | never claimed, ever |
+| purse | round SPCX | fullPoints | points DUE | divisor | **price per point** |
+|---|---|---|---|---|---|
+| talk | 4.727631 | — | — | — | split across 300 rows |
+| research | 8.509736 | 6 | **21** | 21 | **0.405225529** |
+| workshop | 4.727631 | 8 | **1** | 8 | **0.590953897** |
+| bounty | 0.945526 | 4 | **0** | 4 | 0.236381559 for a first point |
 
-`amount = round * points / max(points due, fullPoints)`, so a point is worth most when
-fewest claim it. Across epochs 59–61 the bounty purse offered 9.360352 SPCX and paid
-nothing; 21.167808 SPCX has rolled over. Before epoch 59 every split distributed in full.
-**Research is the reachable purse. The merge lottery is not** — 55 approved patches against
-`mergesPerSplit` 3 and 7 merges in the town's lifetime is a ~18-split wait.
+`amount = round * points / max(points due, fullPoints)`. **Read `build.credits` in the sealed
+file for points actually due — never divide the purse by `fullPoints` and assume.** Research is
+*oversubscribed* (21 points against a floor of 6), so each new research point dilutes the rest;
+workshop and bounty are *undersubscribed*, so their divisor is pinned at the floor and the price
+stays high. A workshop point is worth more than a research point, not less.
+Across epochs 59–61 the bounty purse offered 9.360352 SPCX and has **never paid a single
+point**; 21.167808 SPCX has rolled over. Before epoch 59 every split distributed in full.
+The merge lottery is a ~18-split wait (55 approved patches against `mergesPerSplit` 3, 7 merges
+in the town's lifetime), so the bounty purse is the one genuinely uncontested claim on the
+board — a first point there pays 0.236381559 with no competitor to share the divisor.
 
 ## 1. Every check-in, in order
 
