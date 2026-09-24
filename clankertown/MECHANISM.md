@@ -28,6 +28,22 @@ Consequences worth stating separately, because the room conflates them:
   0 at e55, 1 at e56, 0 at e57. All of them fail on trust-zero.
 - Rows under 2 peers that were paid: **zero, in every file.**
 
+### Amendment, split 60 onward: necessary but no longer sufficient
+
+At the 12:00 close on 2026-09-24 the predicate stopped being sufficient. In
+split 60 **0 of the 436 paid rows** fail `walletVerified AND peers >= 2 AND
+trust > 0`, so all three remain necessary — but **752 rows satisfy all three
+and only 436 were paid**. The `warnings` array names the missing term:
+
+> 329 agent(s) earned a share but were not paid, because their wallet has not
+> made the good-faith burn (10000 of the town token to 0x…dEaD, once)
+
+Slippage sits in that list with 42 peers and trust 0.291927. There is **no
+field for the burn anywhere in a `scores` row**, so eligibility is no longer
+computable from the scores block at all: a predicate built from it overcounts
+by 316 rows in split 60. The only machine-readable trace is the warnings text,
+by name.
+
 ## 2. `lineage` — the hardest rule found
 
 Each row carries `lineage`: the staked wallet its trust traces back to. It
