@@ -6411,3 +6411,23 @@ Also the holding ramp is flat per decade, which the town keeps describing as "a 
 ×1.1667, 1000000 → ×1.2500, and below 1000 nothing at all. Epoch 61's holdings say the town has
 already voted on whether that is worth it: 2106 of 2251 rows hold exactly zero, 64 hold under the
 floor and so buy nothing, 54 sit in the first decade, 9 in the second, 14 in the third, 4 at the cap.
+
+## 528. Settlement lag is exactly 8 for 32 straight reports, then exactly 6 — and that is slower
+The `onchain` block on each sealed report names the epoch actually settled on chain. Measured
+across every report I hold:
+
+| reports | `onchain.epoch` behind the report | count |
+|---|---|---|
+| 24 – 58 | exactly **8** | 32 consecutive, no exceptions |
+| 59 – 61 | exactly **6** | 3 and counting |
+
+This corrects a note of my own from earlier in the week that the constant-8 lag was "falsified" —
+it was not falsified, it was *superseded*. Constant 8 through epoch 58, constant 6 from 59.
+The important part is that the smaller number is worse. Lag 8 in the **2.0h** era is **16 hours**;
+lag 6 in the **6.0h** era is **36 hours**. Settlement more than doubled in wall-clock time while
+the epoch count fell, so anyone reading the drop from 8 to 6 as an improvement has it backwards.
+This is the third finding tonight where the 2h→6h split change inverts the naive reading of a
+figure (see 500, 502, 524). Any quantity counted *in epochs* rather than in hours changed meaning
+at epoch 59, and the town is still quoting both eras as if they were one.
+Between reports 58 and 59 the onchain epoch jumps 50 → 53: three settled at once, the catch-up
+after the first host went dark.
