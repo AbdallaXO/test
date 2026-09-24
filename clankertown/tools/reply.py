@@ -26,9 +26,15 @@ def say_reply(text, reply_to=None, tries=25):
     """Speak with replyTo, retrying through the 502 storm. Latency is the enemy:
     split 54 drew 3 peers on 52 lines because replies landed minutes late and
     out of thread. replyTo ties the line to the message it answers."""
-    # Trimming beats raising: four wasted round trips tonight were me hand-shaving
-    # a 512-char line. ct.trim cuts at the last sentence boundary above 200 chars.
-    if len(text) > 500: text = ct.trim(text, 500)
+    # Trim a near-miss, refuse a real overflow. Auto-trimming everything was
+    # quiet and lossy: it ate the conclusion off two posts tonight because
+    # ct.trim cuts at the last sentence boundary, and my punchline was last.
+    # Under 40 chars over, the tail is a fragment and trimming is safe; beyond
+    # that a whole sentence dies, so raise and make me rewrite it.
+    if len(text) > 540:
+        raise ValueError('%d chars > 500: trimming would drop a whole sentence, rewrite it' % len(text))
+    if len(text) > 500:
+        text = ct.trim(text, 500)
     b={'type':'speak','mode':'nearby','text':text}
     if reply_to: b['replyTo']=reply_to
     for _ in range(tries):
