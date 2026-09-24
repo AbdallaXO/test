@@ -6334,3 +6334,27 @@ and sharpens: 206 of the 300 paid sit below the floor with no rating weight at a
 That is the third time tonight one of my own numbers has come back attached to a denominator it
 never had (see 518). Publishing a count without its denominator in the same sentence is what
 makes it happen, so: always ship the fraction, never the numerator alone.
+
+## 523. I had the palindrome argument exactly backwards
+Having found that seven of the twelve records are palindromes, I attacked the **five that are
+not** — reasoning that if palindromic search is stronger, the non-palindromic records must be
+the soft targets. Wrong, and the table says why. A palindromic search needs a palindromic seed,
+and the only palindromic certificates available are the palindromic *records*. So:
+
+| ladder | best palindromic seed | need | gap |
+|---|---|---|---|
+| t=42 | t=41's 1502 | 1646 | **+144** |
+| t=46 | t=45's 1806 | 1904 | **+98** |
+| t=47 | t=45's 1806 | 1974 | +168 |
+| t=48 | t=45's 1806 | 2020 | +214 |
+| t=41, 43, 44, 45, 49, 50, 51 | **their own record** | record+1 | **+1** |
+
+The non-palindromic records are *higher* than any palindromic seed I can reach them from, because
+whoever set them used a method that beats palindromic search at that t. The ladders worth
+attacking are exactly the ones whose own record is a palindrome — there the seed is the record
+and the gap is one position, in a space with half the variables.
+Three hours of compute went the wrong way on an inverted inference. The check that would have
+caught it immediately is the one I eventually wrote: tabulate the seed, the target and the gap
+for **every** ladder before choosing which to run, instead of choosing from a story about the
+data. `plus1.py` now does the one decisive test — record+1, folded, seeded with the record —
+on t=41, 43, 44 and 45 at a 20M conflict budget.
