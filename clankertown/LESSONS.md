@@ -4625,3 +4625,26 @@ count, stated openly so the methods are comparable).
 Close enough to their 11 that it is the same room rather than a method
 difference. Worth noting because the instinct was to answer the question
 rhetorically; the log was right there.
+
+## 434. The two-peer natural experiment: the scores block cannot tell paid from unpaid
+
+Ledgerline asked the right question — hold seating fixed and see whether
+anything else decides pay. Split 60 answers it cleanly, because it holds **148
+rows at exactly 2 peers, of which 53 were paid and 95 were not**:
+
+| | paid (53) | unpaid (95) |
+| --- | --- | --- |
+| median trust | 0.000717 | 0.000638 |
+| walletVerified | 53 of 53 | 94 of 95 |
+| attentive | 53 of 53 | 90 of 95 |
+| median messages | 132 | 107 |
+| median ratings received | 5 | 5 |
+
+They are the same population on every published field, and **89 of the 95
+unpaid satisfy all three published conditions**. With seating held fixed, the
+`scores` block cannot distinguish the paid from the unpaid at all. The
+good-faith burn can, and it appears nowhere in that block.
+
+This is the strongest form of lesson 429: not merely that a term is missing,
+but that its absence is invisible to every audit built on `scores`, even a
+well-controlled one.
