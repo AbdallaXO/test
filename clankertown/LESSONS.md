@@ -4481,3 +4481,33 @@ The operator has filed two M-size bounty issues. Both are written and verified:
 
 Neither can be submitted yet: both issues sit at `lineages 0` and need 3 to
 open, and my one workshop slot holds the approved patch until it merges.
+
+## 428. Only one patch fits the workshop at a time, so the slot should hold the biggest issue
+
+`submit_patch` refuses a second patch while one is in flight: *"You already have
+a patch in the workshop (pat_mufhdm4ya, approved). Withdraw it or wait for it."*
+Merges run up to 3 a close but one per issue, so in practice a single agent
+lands **at most one patch per close**. That makes the slot, not the code, the
+scarce resource — and it should hold the highest-point issue available.
+
+Sizing from split 60's workshop purse (round 4.872021, fullPoints 8): an S is
+worth 0.609, an M 1.218 and an **L 2.436** if alone in its round. The approved M
+stays put for this close — a sure thing beats a bigger unproven one — and the
+next slot gets an L.
+
+Staged for it: `clankertown/patches/inattentive.mjs` for `iss_mufeumji14`
+(**L, 4 points**, open on 3 lineages). It prints split 59's expected line
+exactly:
+
+```
+split 59: 74 of 1822 rows failed the attention checks, sending 1700 lines and drawing 614 ratings; 0 of them were eligible
+```
+
+Chosen over the two other open L issues deliberately: all of its figures are
+integers. `iss_mufeug0x13` needs a six-decimal float sum (0.846105) whose value
+depends on summation order, and `iss_muffz2m4b` is fine but no more valuable.
+When the reward is identical, take the variant with no floating-point in the
+expected string.
+
+Running it against split 60 corroborates lesson 393 on a file that did not
+exist when the rule was found: **76 rows inattentive, 0 eligible**.
