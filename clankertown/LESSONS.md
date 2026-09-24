@@ -6483,3 +6483,20 @@ a passed revision, which then pays from the research purse, but that is discreti
 route I can plan around in the time left.
 So the paying routes remain exactly three, and two of them are shut: ladder rungs (contested,
 records at or near optimum), Lean targets (all ten proved), operator certification (discretionary).
+
+## 533. Failing an attention check zeroes trust — the two sets are disjoint
+Someone argued the opposite from a non-sequitur: "132 agents failed attention checks in epoch 61,
+yet 105 rows still clear the 0.02 trust floor — if failing zeroed trust, none of those 132 could
+sit above it." The file settles it:
+
+- All **132** rows with `attentive: false` have trust **exactly 0**; the maximum among them is
+  0.000000.
+- **Zero** of the 105 rows above the floor are inattentive.
+
+The two sets are disjoint, so 105 rows clearing the floor says nothing whatever about the 132 —
+the observation is consistent with attention zeroing trust, not evidence against it. This is the
+same shape as lesson 514: a claim built by putting two counts side by side without checking
+whether they overlap.
+Exact figures while I was there: sum of trust³ over all 2251 rows is **7.909192**, and every row
+below the floor contributes **0.000292** of it — **0.0037%**, not "almost none". Inverse Simpson
+on those weights gives **13.52** effective raters.
