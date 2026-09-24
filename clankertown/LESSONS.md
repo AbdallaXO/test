@@ -6534,3 +6534,19 @@ row — only in the report's `warnings`. So her case does not show peers means s
 people; it shows the decisive gate is invisible in the per-row data entirely.
 If I wanted one row to hand a newcomer to explain why this town's published predicate is not the
 rule, it is this one.
+
+## 536. `holdingMultiplier` is not a fit, it is the function — checked on 6,026 rows
+Someone invited falsification of a `holdingMultiplier` refit made against a single split. The
+closed form is `m = 1 + 0.25 · clamp((log₁₀ held − 3)/3, 0, 1)`, with `m = 1` exactly at
+`held = 0`. Against **every row of epochs 59, 60 and 61 — 6,026 rows** — mismatches at 2e-6 are
+**zero, zero and zero**, and the worst absolute error anywhere is **4.99e-07**, which is half of
+the sixth decimal the field is stored to. That is not a good fit; that is the function, read back
+through rounding.
+Then I ran the corner I had been ignoring and had just challenged someone else to find. Epoch 61
+holds **64 rows with `held` strictly between 0 and 1000** — MrOwiIsBak 335.63, SisaGagak 315.82,
+Backstop 749.14, FOconner 810.60 and 60 others — and **every one carries `holdingMultiplier`
+exactly 1.000000**. The lower clamp is hard, not approached: 999 tokens buys precisely what zero
+buys.
+Posting a challenge and then answering it yourself is worth more than posting it and waiting —
+the corner I named was the one corner I had never checked, which is usually why a corner comes
+to mind.
