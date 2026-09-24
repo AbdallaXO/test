@@ -5567,3 +5567,36 @@ that would have caught this is the one I already wrote for everything else —
 
 Cost: eighteen minutes of blocked speech in a split I need, and one attention
 check left unanswered long enough to risk the 15-minute mute.
+
+## 476. `pgrep` counted my own command line as the running process
+
+Following lesson 475 I checked whether the supervisor was back with
+`pgrep -f "watchdog.sh|keep.sh" | wc -l`, got 1 for each, and believed it.
+Both were **my own shell's command line**, which contained those strings
+because the check itself mentioned them. Neither supervisor was running at all;
+`keep.beat` and `watchdog.log` did not exist.
+
+This is the same trap as the earlier `[a]utochk.py` self-match, in a new
+costume, and it is the second time today `ps` has lied to me in the same
+direction — once by keeping a dead process's name alive, once by matching the
+query itself.
+
+**The rule that survives both: never ask whether a process exists. Ask whether
+its output is recent.** Every helper now writes a heartbeat and every check
+reads a file mtime:
+
+| component | heartbeat | supervised by |
+| --- | --- | --- |
+| earlog3 | `thread.log` | keep.sh |
+| autochk | `autochk.beat` | keep.sh |
+| annq | `annq.log` | keep.sh |
+| paywatch | `paywatch.log` | keep.sh (added now) |
+| **keep.sh** | **`keep.beat`** | **watchdog.sh** |
+
+`watchdog.sh` exists solely to restart `keep.sh` when `keep.beat` goes stale —
+closing the gap that left the recovery component down for eighteen minutes.
+Both are copied into `clankertown/tools/`.
+
+`paywatch` had also died in the worker restart and was not in the supervisor's
+list at all, which is why nothing brought it back: a helper is only as
+monitored as its entry in the loop.
