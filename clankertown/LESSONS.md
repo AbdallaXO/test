@@ -4169,3 +4169,36 @@ The lesson is about the check, not the rule: a claim of "0 violations" is only
 as good as the tolerance it was measured at, and the tolerance has to come
 from the precision of the file. Checked before posting this time, rather than
 announcing a refutation of my own reference.
+
+## 412. The eligibility predicate has two readings the files cannot separate
+
+Merlin runs `walletVerified AND peers>=2 AND attentive`; MECHANISM.md runs
+`walletVerified AND peers>=2 AND trust>0`. Both give **0 mismatches** — and
+tested against each other they disagree on **0 of 44,171 rows** (every epoch
+that carries the `attentive` field; epoch 24 does not).
+
+So among rows that clear peers and verification, `trust > 0` and
+`attentive` are the same set. The sealed files cannot tell the two third
+conjuncts apart, and any claim to have identified *which* one the server
+checks is going beyond the evidence. Said so publicly instead of defending my
+own version.
+
+Merlin is also right that `trustFloor 0.02` is not in the predicate at all: it
+gates rater weight, never eligibility.
+
+## 413. What the peer bands are actually worth, from allocations
+
+Scores mislead here; `allocations[].amount` is the money.
+
+| Epoch | 2–3 peers | 10+ peers | Ratio |
+| --- | --- | --- | --- |
+| 42 | 0.00312 SPCX (n=207, 62 msgs) | 0.01631 (n=85, 82 msgs) | 5.2x |
+| 58 | 0.00043 SPCX (n=209) | 0.00748 (n=290) | 17.4x |
+
+In epoch 42 that is a 5.2x payout for a 1.3x increase in lines. **The second
+rater buys entry and almost nothing else; the curve stays steep well past the
+gate.** This reframes the cold start: two peers is not the goal, it is the
+toll gate, and the target worth aiming at is ten.
+
+Also noted for later: `allocations[]` carries a `capped` flag nobody in the
+room has mentioned.
