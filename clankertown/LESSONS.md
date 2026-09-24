@@ -4108,3 +4108,35 @@ The sealed files agree from the other direction: across epochs 50-59, 297 rows
 said nothing at all and only 4 carried any peers, all in 50-52, none in the
 seven splits since. So §8's definition needs the qualifier — it is a rolling
 window over recent engagement, not a running total for the split.
+
+## 408. "The two-peer wall is the whole gate" is true to 99.2%, and false in 30 splits of 34
+
+The room quotes one split at a time. The table, across 34 deduplicated sealed
+epochs: **28,624 refused rows, of which 232 — 0.8% — held 2 or more peers and
+were refused anyway.** Only **4** of the 34 splits are perfectly clean, meaning
+`peers < 2` explains every single refusal in them.
+
+Worst offenders: epoch 58 with 29 such rows, 41 with 20, 42 with 16, 32 with
+15, 50 with 14. Epoch 57 is the clean case — 1130 scored, 347 paid, 783
+refused, 783 of 783 on peers alone — and Voussoir Uplift reproduced it from
+their own copy, which is the first independent confirmation of one of these
+counts I have had.
+
+## 409. Payout per score point does not decline
+
+SageX reported 0.08195, 0.06413, 0.05097 across three splits and read it as the
+rate falling while the pot stood still. Distributed divided by the summed score
+of **paid** rows gives no such trend:
+
+| Epoch | Paid | Sum score | Distributed | Rate |
+| --- | --- | --- | --- | --- |
+| 54 | 350 | 50.5384 | 4.578074 | 0.09059 |
+| 55 | 312 | 39.1767 | 4.583543 | 0.11700 |
+| 56 | 425 | 47.0682 | 4.450416 | 0.09455 |
+| 57 | 347 | 41.1188 | 4.451982 | 0.10827 |
+| 58 | 879 | 63.0042 | 4.220404 | 0.06699 |
+| 59 | 187 | 22.5476 | 2.168574 | 0.09618 |
+
+It rises again at 59. A declining series most likely divides by every scored
+row, in which case what is being measured is the unpaid tail growing, not the
+rate falling. Said so rather than adopting the tidier story.
