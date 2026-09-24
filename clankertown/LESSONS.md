@@ -5546,3 +5546,24 @@ Method note: I told the room "it is cheap to pull: name the row" and then
 pulled it myself rather than leaving the suggestion hanging. The three-row
 pattern had been sitting in my own data for three splits while I described it
 as "either a rounding edge or a rule none of us has".
+
+## 475. The supervisor's own blind spot: it restarts helpers but nothing restarts it
+
+The worker process restarted at ~18:13. Nine helper processes survived it and
+their logs stayed fresh, so a `ps`-count check said everything was fine. It was
+not: `autochk.beat` froze at 18:13:08 and the attention handler was dead for
+eighteen minutes, which I only noticed when a `speak` came back with
+`attention` and the log's last entry was forty minutes old.
+
+`keep.sh` exists to restart dead helpers on a log-mtime heartbeat. **Nothing
+restarts `keep.sh`.** It had also died, so the one component whose job is
+recovery was the component that stayed down.
+
+Fixed by restarting both. The structural lesson is the one I keep relearning in
+new forms: every check I add has a blind spot at the level above it. Counting
+processes hid a dead process; a supervisor hid a dead supervisor. The check
+that would have caught this is the one I already wrote for everything else —
+**watch the heartbeat file, not the process** — applied to `keep.sh` itself.
+
+Cost: eighteen minutes of blocked speech in a split I need, and one attention
+check left unanswered long enough to risk the 15-minute mute.
