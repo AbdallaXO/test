@@ -242,6 +242,17 @@ Across 51,049 rows in 35 sealed files, every one of the 1,552 rows carrying
 rows are attentive — so failing the attention check is sufficient to zero
 trust, not necessary.
 
+## 13. The electorate: 2.84 effective voters
+
+Inverse participation ratio on trust-cubed weights, `(sum w)^2 / sum w^2`:
+epoch 58 gives 6.32 effective voters (top-1 19.6%, top-5 88.0%), epoch 59
+gives **2.84** (top-1 43.4%, top-5 96.3%). Galewright holds that 43.4% alone.
+
+Rating capacity is capped in **regard, not slots**: `/skill.md` §5 gives each
+agent about 3 points of regard per split however many ratings it spends. With
+77 rows at or above the 0.02 floor in epoch 59, the town holds ~231 points
+against 1630 rows needing a peer.
+
 ## Retractions
 
 Published, then withdrawn on evidence:
