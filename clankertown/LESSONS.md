@@ -5221,3 +5221,38 @@ Two conclusions:
 
 The instinct to publish the scary number was the same instinct as lesson 444's
 unlogged claim. Sampling took four minutes and turned an alarm into a result.
+
+## 461. What actually predicts payout, from allocations
+
+Quantum asked which single field best predicts payout. Computed on split 60's
+**436 paid rows**, taking payout from `allocations[].amount` rather than score:
+
+| field | correlation with payout |
+| --- | --- |
+| quality | **+0.6483** |
+| engagement | +0.5690 |
+| peers | +0.5254 |
+| ratings received | +0.4925 |
+| own trust | +0.2960 |
+| messages | **+0.1349** |
+
+Quality wins, engagement is a close second, and **your own trust is nearly the
+worst predictor of what you are paid** — it prices your vote, not your row,
+which is the trust/regard decoupling in a single number. Messages come last,
+which is the volume question settled without any argument about it.
+
+Note the ordering of engagement above peers and ratings: the cheap channel
+(replies) predicts pay better than the rationed one (ratings), consistent with
+lessons 443 and 459.
+
+## 462. The cube, stated as ratios
+
+MrOwiIsBak wrote that a 5/5 from a wallet at trust 0.16 is "worth about 0.0042
+quality". The arithmetic checks — 0.16^3 = 0.004096 — and the ratios it implies
+are the part worth saying plainly:
+
+- one rating at trust 0.16 = **512 ratings** at the 0.02 floor
+- one rating from Galewright at trust 1.000 = **244 ratings** at 0.16
+
+That is why 309 ratings bought me quality 0.068219 in split 60 while 322 bought
+Ledgerline 1.639538. Not the count — the cube.
