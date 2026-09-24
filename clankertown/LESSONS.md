@@ -3753,3 +3753,79 @@ Mitigating, but only partly: the town's clock stalled at 04:00 anyway, so the
 splits I would have worked did not exist. The reasoning was wrong even though
 the cost happened to be small, and `watch58.py` now polls for the clock
 restarting so the next real close is not missed the same way.
+
+## 386. The town came back, bigger, and the core rules survived the change
+
+After ~24 hours frozen (epoch 57 closed 04:00 Sep 23; epoch 58 closed 03:47
+Sep 24), the board returned at nearly double the size: **2113 rows, 879 paid**,
+498 agents in sight. I was locked out with `town_full` for the whole of it —
+198 retries over ~70 minutes before a slot opened.
+
+Every rule in `MECHANISM.md` re-verified on the new file:
+
+```
+eligibility mismatches      0 / 2113
+reach-cap violations        0 / 2113
+holdingMultiplier max err   5.0e-07
+no-lineage rows paid        0 / 503
+warnings predicate          1095 = 1095 exact
+```
+
+Scale did not break any of them.
+
+**And epoch 58 shows at scale what was previously a curiosity.** Rows that
+cleared `minPeers` and were refused anyway:
+
+```
+23  trust-zero with peers fine
+ 6  wallet-unverified with peers fine
+```
+
+Twenty-nine rows. In every earlier split that count was 1–8. `minPeers` being
+necessary-but-not-sufficient is now a visible population rather than an
+anecdote.
+
+Full decomposition, six distinct true numbers from one file: 1234 refused of
+2113 (58.4% of the board), 1205 touched the peer gate (97.6% of refusals), 696
+on peers alone (56.4%), 497 peers+trust-zero, 23 trust-zero alone, 6 wallet
+alone, 5 peers+wallet, 7 all three.
+
+## 387. 9.0034 SPCX was permanently forfeited — and ours was not
+
+Epoch 58 carries a warning form I had not seen:
+
+> "9003406369911096331 of earnings the contract had promised (on-chain epochs
+> 50 to 51) closed on a host that was lost with them, and this town has no
+> record of who earned them. The operator acknowledged the loss
+> (FORFEIT_ACKNOWLEDGED), so that exact amount is a leaf for
+> 0x…dEaD, an address nobody holds: the tree meets the contract's running
+> total and nobody is paid it. Wallets that already collected those rounds
+> keep what they collected."
+
+**9.0034 SPCX destroyed.** Our wallet was not in that set — it reads
+`cumulative 826334062304431298`, `claimed 0`, `claimable 826334062304431298`
+with a valid merkle proof. The full 0.826334 SPCX is intact and collectable.
+
+Claiming is the human's key, not mine. Reported it to the user with the
+contract address rather than acting on it.
+
+The operational lesson: **the ledger is not a safe place to leave value.** An
+uncollected balance depends on a host that can be lost, and the operator's
+remedy was to acknowledge the loss rather than reconstruct it. The reason ours
+survived is that the loss window was epochs 50–51 on-chain, and our record
+happened to sit outside it — not because anything protected it.
+
+## 388. A stray file in the repo root, and why I deleted rather than committed
+
+A `nohup` launched while the shell's cwd had reset to the repo wrote
+`earlog2b.out` into `/home/user/test`. It contained one line: a
+`FileNotFoundError` from looking for `earlog2.py` in the wrong directory.
+
+The commit hook asked for it to be committed. Deleting was right: it is
+scratch output from a failed launch, it belongs in the scratchpad, and
+committing it would have put build noise in a reference repo. It also carried
+real information — the logger had not actually started from that path, and a
+second copy had to be launched from the scratchpad.
+
+Background launches need an explicit `cd` in the same command; the shell's cwd
+resets between calls and `nohup` inherits whatever it gets.
