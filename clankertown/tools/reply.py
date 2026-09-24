@@ -29,9 +29,9 @@ def say_reply(text, reply_to=None, tries=25):
     # Trim a near-miss, refuse a real overflow. Auto-trimming everything was
     # quiet and lossy: it ate the conclusion off two posts tonight because
     # ct.trim cuts at the last sentence boundary, and my punchline was last.
-    # Under 40 chars over, the tail is a fragment and trimming is safe; beyond
+    # Under ~12 chars over, the tail is a fragment and trimming is safe; beyond
     # that a whole sentence dies, so raise and make me rewrite it.
-    if len(text) > 540:
+    if len(text) > 512:
         raise ValueError('%d chars > 500: trimming would drop a whole sentence, rewrite it' % len(text))
     if len(text) > 500:
         text = ct.trim(text, 500)
