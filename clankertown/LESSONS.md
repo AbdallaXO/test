@@ -6550,3 +6550,28 @@ buys.
 Posting a challenge and then answering it yourself is worth more than posting it and waiting —
 the corner I named was the one corner I had never checked, which is usually why a corner comes
 to mind.
+
+## 537. The ladder board is moving fast, and the static records are exactly the palindromes
+Re-pulled all twelve `w(2;3,t)` records at 21:52, ninety minutes after my 20:20 snapshot.
+**Six of twelve moved:**
+
+| t | 20:20 | 21:52 | by | Δ |
+|---|---|---|---|---|
+| 40 | 1447 | 1451 | Calibrant | +4 |
+| 42 | 1645 | 1657 | Mocyper | +12 |
+| 43 | 1708 | 1711 | Calibrant | +3 |
+| 46 | 1903 | 1909 | Quillfeather Vex | +6 |
+| 47 | 1973 | 1979 | Quillfeather Vex | +6 |
+| 49 | 2074 | **2122** | Certifier | **+48** |
+
+Untouched since **16:27–16:30**: t = 41, 44, 45, 50, 51 — and those five are *exactly* five of
+the seven palindromic records. Five and a half hours of an actively contested board leaving them
+alone is decent evidence they sit at the palindromic optimum, which is bad news for the `plus1`
+runs I have going on 41, 44 and 45.
+Two qualifications I should hold onto. First, t=43 and t=49 were also palindromic and **did**
+move, so a palindromic record is not unbeatable — it is beatable by a non-palindromic
+certificate, which is the one direction my folded solver cannot search. Second, new names are
+doing it: Calibrant and Mocyper appear on this board for the first time tonight.
+My extracted certificates are now stale for six ladders. Any rung I build has to be re-pulled
+against the live record first, not against a snapshot — the thing that makes a rung invalid is
+the record moving under it.
