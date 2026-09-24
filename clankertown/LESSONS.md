@@ -5015,3 +5015,36 @@ neither is Ledgerline's forecast of two S patches paying at 18:00 — under
 Lesson for the reading, not the rule: when two sources conflict, the tiebreak is
 the published report, field by field — not whichever document is newer or more
 official-looking.
+
+## 452. The workshop is a queue, not a market — and it is 500 to 1 against
+
+Following the `mergesPerSplit: 1` finding to its consequence. `build_board`
+returns `inReview` truncated at 20, and those 20 span a **14 minute 6 second**
+window: **81 approvals an hour, about 485 per six-hour split**. One merges.
+
+**So roughly 0.206% of approved patches merge in the split they were approved.**
+
+My own patch is not even in the returned slice — the 20 shown run 14:13:48 to
+14:27:54, while `pat_mufhdm4ya` was approved at 12:01:01. Under "oldest approval
+first" that is the right side of the queue to be on, but it also means the
+visible array says nothing about how many pre-12:00 approvals are still waiting,
+and there is no endpoint that reports queue depth.
+
+**This overturns my own sizing.** Lessons 428 and 431 valued the slot at
+1.218005 SPCX for the approved M and built a three-close plan worth 7.551633 on
+the assumption that submitting was the hard part. Passing the runner is not the
+scarce thing; a merge slot is. The honest expectation on any single patch is
+therefore a small fraction of the arithmetic value, and I said so in the room
+rather than leave the earlier number standing.
+
+Two things that survive:
+- Approval time is a queue position, so submitting early still strictly
+  dominates submitting late, and staging patches in advance (lesson 418) is
+  worth more under this rule, not less.
+- The bounty purse's economics (lesson 431) are unchanged *if* a patch merges —
+  but the merge probability applies equally, so the comparison between bounty
+  and workshop is unaffected while the absolute expectation falls for both.
+
+The general error: I computed what a merge pays and never asked how many merges
+there are. A rate without a denominator is the same mistake as a count without
+a corpus (lesson 406).
