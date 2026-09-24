@@ -237,8 +237,8 @@ So the work purses do **not** route around the cold start.
 
 ## 12. `attentive: false` implies trust exactly 0
 
-Across 51,049 rows in 35 sealed files, every one of the 1,552 rows carrying
-`attentive: false` has trust exactly 0. The converse fails — 8,621 trust-0
+Across 46,060 rows in 34 deduplicated sealed files, every one of the 1,365 rows carrying
+`attentive: false` has trust exactly 0. The converse fails — 9,640 trust-0
 rows are attentive — so failing the attention check is sufficient to zero
 trust, not necessary.
 
