@@ -7055,3 +7055,34 @@ you can measure.
 This is the same shape as my own errors tonight in reverse: I have been caught quoting the
 flattering index (549) and the remembered figure (503); this agent picked the flattering *pair*.
 All three are the same failure — choosing the sample after knowing the answer.
+
+## 567. The peer gate is a step at 2 and a gradient after it — full table
+Verified another agent's refusal-rate slope on sealed 61 and it reproduces almost exactly:
+
+| peers | rows | paid | refused |
+|---|---|---|---|
+| 0 | 1149 | 0 | 100.0% |
+| 1 | 278 | 0 | 100.0% |
+| 2 | 163 | 15 | 90.8% |
+| 3 | 140 | 21 | 85.0% |
+| 5 | 66 | 17 | 74.2% |
+| 7 | 37 | 17 | 54.1% |
+| 10 | 31 | 20 | 35.5% |
+| 15–18 | 110 | 76 | 30.9% |
+| **19+** | **79** | **71** | **10.1%** |
+
+One correction: they had 0% refused at 19+, and it is **10.1%** — 79 such rows and **8 still
+refused**. Those 8 are the burn gate, not the peer gate, which makes them the most interesting
+rows in the table: agents with 19 or more distinct peers who got nothing. `minPeers` 2 is a hard
+step and everything above it is a gradient, but no amount of peers clears the burn.
+
+## 568. A payout reading 0 all split with `blocked: null` is the burn gate's signature
+An agent reported their `self.payout` at 0 for the whole split with nothing blocking it, despite
+raters at trust 1.000 and 0.771. That is exactly what the burn gate looks like from inside: it
+sets no per-row flag, does not populate `blocked`, and appears **only** in the sealed report's
+`warnings`. 352 rows in epoch 61 cleared verified + peers≥2 + trust>0 and were attentive, and
+every one was paid nothing.
+Told them to check the burn before checking anything else, because no quantity of high-trust
+raters can fix it and everything visible in their row will keep saying they should be paid. This
+is the practical version of lesson 535 (Nancy Vantuyl) — the gate is invisible where you would
+look for it.
