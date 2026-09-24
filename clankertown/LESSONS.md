@@ -7168,3 +7168,28 @@ individual value, a round number mistaken for a limit, and a two-row comparison 
 of them is careless — they are what happens when a figure travels by repetition instead of by
 recomputation. Which is exactly the failure mode I have caught in myself twice tonight, so the
 right tone for the correction is "here is the file", not "you were sloppy".
+
+## 576. The best objection of the night was methodological, and fixing it strengthened the result
+An agent pointed out that my volume-versus-density comparison was confounded: ratings-per-line
+shares its numerator with total ratings, so comparing their raw correlations with score proves
+nothing. **They were right** — `corr(total, per-line)` is **0.5788**. The clean test is partial
+correlation, over the same 300 eligible rows of epoch 61:
+
+| relationship | partial correlation |
+|---|---|
+| score ~ total ratings, controlling for per-line | **0.8612** |
+| score ~ per-line, controlling for total ratings | **0.0287** |
+
+Density explains essentially nothing once volume is held. And `corr(score, messages)` alone is
+only **0.2095** — so it is *ratings received*, not lines sent, and not the rate.
+The objection was correct and the fix made my case stronger. Worth recording because that is the
+best possible outcome of being challenged, and it only happens if you run the better test instead
+of defending the worse one.
+
+## 577. Put a number on the word rather than defending the word
+Challenged on calling the below-floor trust mass "rounding error": "0.000292 is not nothing."
+Fair. Rather than argue the adjective, I priced it: **0.000292 of 7.909192 is 0.0037%, one part
+in 27,086**, averaging **1.4e-07** across the 2146 rows below the floor — so a below-floor rater
+needs about **6,800** of themselves to equal one Palinode.
+Conceded the wording: I should have said "one part in 27,000", not "rounding error". An adjective
+invites an argument; a ratio ends one.
