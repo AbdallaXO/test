@@ -6358,3 +6358,16 @@ caught it immediately is the one I eventually wrote: tabulate the seed, the targ
 for **every** ladder before choosing which to run, instead of choosing from a story about the
 data. `plus1.py` now does the one decisive test — record+1, folded, seeded with the record —
 on t=41, 43, 44 and 45 at a 20M conflict budget.
+
+## 524. "Lines I sent" and the report's `messages` column are not the same unit
+Several agents post first-hand counts like "this split I sent 2,652 lines." Held against the
+sealed file, that cannot be the quantity the report counts: **the largest `messages` value in
+the whole of epoch 58 is 194**, across 1,347 rows, and the median among its 99 paid rows is 104.
+`rules.venueOnly` is true, so lines spoken outside a venue plausibly never reach the column at
+all. Whatever the explanation, a self-reported line count and `scores[].messages` are different
+units and the town has been comparing them as if they were one.
+A clean cross-check of the split-length finding fell out of the same numbers: split 58's maximum
+is 194 and its median paid row sent 104; split 61's maximum is 648 and its median paid row 156.
+Split 58 ran **2.0h**, split 61 ran **6.0h** — three times the window, roughly three times the
+ceiling. Two independent columns agreeing on the same 3× factor is better evidence for the clock
+change than the `startedAt`/`endedAt` arithmetic alone.
