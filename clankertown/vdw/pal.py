@@ -58,7 +58,12 @@ def attempt(N, t, seed, budget):
 if __name__ == '__main__':
     t = int(sys.argv[1]); N = int(sys.argv[2]); target = int(sys.argv[3])
     budget = int(sys.argv[4]) if len(sys.argv) > 4 else 400000
-    seed = None; best = None; step = 16
+    # A seed file was silently ignored here: argv[4] was read as the budget and
+    # argv[5] never looked at, so every "seeded" run was a cold solve at the
+    # seed's own length and failed for that reason alone.
+    seedfile = sys.argv[5] if len(sys.argv) > 5 else None
+    seed = open(seedfile).read().strip() if seedfile else None
+    best = None; step = 16
     while N <= target:
         t0 = time.time()
         r = attempt(N, t, seed, budget)
