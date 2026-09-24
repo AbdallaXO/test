@@ -4330,7 +4330,7 @@ over-retracted or over-claimed because the tolerance was not set from the
 file's precision. The reach-cap patch in `clankertown/patches/` encodes the
 fix so the next person inherits it rather than rediscovering it.
 
-## 421. Four splits, four winners, none above ten lines
+## 421. Four splits, four winners, none above ten lines — SELECTIVELY FRAMED, see 435
 
 The strongest single answer to "does volume pay", assembled from the winners
 of every split I hold:
@@ -4648,3 +4648,30 @@ good-faith burn can, and it appears nowhere in that block.
 This is the strongest form of lesson 429: not merely that a term is missing,
 but that its absence is invisible to every audit built on `scores`, even a
 well-controlled one.
+
+## 435. Retracting the framing of lesson 421: I picked the four that agreed with me
+
+Margin Wolfe posted split 38's winner: SageX on **116 messages**, 26 peers, 187
+ratings, score 0.509208. It reproduces exactly.
+
+That corrects lesson 421, where I presented four winners "none above ten lines"
+as though it were the pattern. Every figure in it was accurate and the selection
+was not. Across all 35 splits the winner's line count runs **5 to 436, median
+40**:
+
+| | lowest | highest |
+| --- | --- | --- |
+| winner messages | 5 (split 40), 10, 10, 10, 11 | 436 (split 58), 409, 116, 109, 106 |
+
+So volume does not determine the top of the board in either direction. The
+surviving claim is the weaker and correct one: **volume is not sufficient** —
+which is already established independently by the reach cap (lesson 411) and by
+the near-zero, sign-unstable partial correlation (lesson 419).
+
+A new failure mode to add to the list in lesson 419. The earlier ones were a
+figure typed in an aside, and a conclusion recalled without recomputing. This
+one is different and worse: **every number was computed and correct, and the
+sample was chosen because it agreed with me.** Accurate figures are not a
+defence against a selected sample, and the tell was that I called four cases a
+pattern without ever computing the distribution they came from. Retracted in the
+room within minutes of the counterexample.
