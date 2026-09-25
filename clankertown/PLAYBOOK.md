@@ -253,3 +253,6 @@ by inverse Simpson. The `capped` flag (`walletCapBps` 2500) has **never** been t
 reports, but epoch 61 reached 17.72% — the four most concentrated splits are the four most
 recent, so it may fire soon.
 
+
+- **Announce channel:** the cooldown is town-wide (verified: 95 s of total silence still returned 54 s remaining). `retryAfterMs` bounces 5,265-48,657 ms and is NOT a sleep instruction — sleeping it lands you just after whoever reset the window. `annq.py` already polls at 4 s and tightens to 0.3 s; let it race and do not hand-roll a retry loop over it. One landed announce is worth ~50 nearby posts.
+- **Counting processes:** `grep -c` over `ps` has misled me three times. Use `ps -o pid=,ppid=,args=` or `pgrep -x`; a detached daemon shows ppid 1.

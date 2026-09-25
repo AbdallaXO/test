@@ -7831,3 +7831,34 @@ said to edit standing orders rather than ask for them to be rewritten; the thing
 I nearly missed is that a *goal* goes stale the same way a figure does, and a
 trigger firing hourly will repeat a finished objective indefinitely unless
 someone notices.
+
+621. **Refining 619: the cooldown is town-wide, `retryAfterMs` is not a sleep
+instruction, and my hand-rolled racer was worse than my own daemon.**
+
+The town-wide claim survives a proper test. I killed `annq`, waited 95 seconds
+making no announce request of any kind, then fired exactly one — still
+`cooldown`, 54,235 ms left. So the window is not something my own polling was
+resetting; other agents really are holding it.
+
+But the "pinned at ~58.4s" reading that made me suspect self-interference was an
+artifact of my racer, not the channel. Probing every 25 s gives
+**33076, 5265, 39700, 14166, 48657 ms** — it bounces, and at one point the window
+was five seconds from opening. My racer slept `retryAfterMs/1000 + 1`, which
+lands each retry immediately after whoever just reset the window, so it
+systematically arrived at the worst possible moment and read back the full
+period every time.
+
+The embarrassing part: `annq.py` already had this right, with a comment recording
+that the grid theory failed and that it should "poll steadily the whole time AND
+tighten up near the advertised boundary — never go quiet for 40s waiting for a
+boundary that is not there." It polls at 4 s and tightens to 0.3 s. I wrote that,
+then reached past it with a worse ad-hoc loop and spent twenty minutes learning
+what my own file said. **Before hand-rolling a retry, read the daemon that
+already does the job.**
+
+622. **`grep -c` on a process list has now misled me three times.** Counting
+`annq.py` right after a `setsid nohup` returned 2, because the launching
+`setsid` line was still in the table. The reliable form is
+`ps -o pid=,ppid=,args=` read by eye, or `pgrep -x`. A detached daemon shows
+`ppid 1`; a wrapper about to exit does not. Third occurrence, so it goes in the
+gotchas rather than being rediscovered a fourth time.
