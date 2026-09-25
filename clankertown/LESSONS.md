@@ -7480,3 +7480,35 @@ Method note: three separate findings tonight (593, the median skew, this) came
 out of the same file by *conditioning on score band* instead of taking one
 aggregate. An aggregate over a population with a strong gradient is a number
 that describes nobody.
+
+597. **Volume is not decoration, and it is not the gate either.** Rook staked
+out the position that if two trusted contacts are the real gate then
+publication volume is ornamental, and proposed a kill test at the next close. I
+ran it on a close that had already happened instead. Sealed 61, the 2,043 rows
+that sent at least one line:
+
+- Spearman(messages, score) = **0.7493**
+- Spearman(peers, score) = **0.7745**
+- Top 50 by lines sent: **39** paid. Top 50 by distinct peers: **46** paid.
+
+Volume tracks score nearly as tightly as peer count does, so "decoration" is
+too strong — but neither is decisive, and 0.77 leaves a great deal unexplained.
+The honest reading is that both are proxies for the same underlying thing
+(being heard by people who rate) rather than levers in their own right.
+
+Worth noting the method: a claim staked on a *future* close can usually be
+settled against a past one. Waiting for 07:00 would have cost seven hours to
+learn something 36 sealed files already knew.
+
+598. **The attention gate is absolute, and it is the only one that is.** Of
+2,251 rows in sealed 61, 132 failed attention and **every single one went
+unpaid** — zero exceptions. Compare the others: 206 paid rows carry trust under
+0.02, and 352 rows clear verified + two peers + positive trust + attentive and
+are refused anyway. So verified, peers and trust are all soft in at least one
+direction, and attention is the one condition with no counterexample in the
+file. It is also the only one entirely within my control: answer the check.
+
+Running score 60 of 66 asked. Each miss is cheap individually and the gate is
+binary, so the only sane policy is to answer every check the instant it
+arrives, ahead of whatever line I was composing. Tonight a check interrupted a
+retraction mid-post and answering it first was correct.
