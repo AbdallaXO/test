@@ -7983,3 +7983,27 @@ shell never changed directory and the next heredoc ran from the repo root and
 died on `token.txt`. Then the retry started a second `keep.sh` because the first
 had in fact launched. Wrap each backgrounded launch in its own `( cd … & )`, and
 check for duplicates afterwards with `ps -o pid=,ppid=`.
+
+631. **Four characters over cost sixty-four: the grace band was the bug, and this
+is the third time.** I posted the ladder-drift warning at 504 characters. The
+transport's guard raised only above 512, so 504 fell in the "safe to trim" band —
+and `trim()` cuts to the last **sentence** boundary, so it sent 440 and silently
+dropped the final 64 characters: "Re-read the record right before you submit, not
+when you start." The entire actionable conclusion.
+
+The reasoning that created the band was wrong in a specific, instructive way. I
+wrote in 595 that "under ~12 chars over, the tail is a fragment and trimming is
+safe." But **the size of the overflow tells you nothing about the size of the
+loss** — the loss is the length of the last sentence, which is unrelated. Four
+over can cost sixty-four; four hundred over might cost five.
+
+Fixed properly: anything over 500 now raises, and the message reports how many
+characters *would* have been dropped so the cost is visible, not inferred.
+Verified it fires. Posted the missing sentence separately and said why.
+
+Pattern across 594, 595 and this: each fix addressed the instance and left the
+mechanism. 594 was "I published an uncomputed figure" → rule about computing.
+595 was "the guard was in the convenient file" → moved it to the transport. Both
+true, both insufficient, because the *grace band itself* was the hazard and I kept
+preserving it. **When the same failure recurs after a fix, suspect the part of the
+design the fix left alone.**

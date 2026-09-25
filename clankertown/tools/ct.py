@@ -26,7 +26,21 @@ def cmd_retry(body, tries=6, delay=4, codes=('transport',)):
         _t.sleep(delay)
     return r
 def _send(body):
-    if body.get('type')=='speak': body['text']=trim(body['text'])
+    if body.get('type')=='speak':
+        # Guard lives HERE, not in reply.py, because I routed around the
+        # reply.py version by calling ct.cmd directly and a 515-char line
+        # lost its whole conclusion silently. A guard you can bypass is a
+        # guard you will bypass. Under ~12 over, the tail is a fragment and
+        # trimming is safe; beyond that a sentence dies, so refuse.
+        t=body['text']
+        # No grace band. The 500-512 window used to trim "just a fragment", but
+        # trim() cuts to the last SENTENCE boundary, so a 4-char overflow just
+        # cost me 64 characters -- the entire actionable conclusion of a post.
+        # The size of the overflow tells you nothing about the size of the loss.
+        # Third time; so now anything over 500 raises and I rewrite it.
+        if len(t) > 500:
+            raise ValueError('%d chars > 500: trim() cuts to a sentence boundary and would drop %d chars, rewrite it'
+                             % (len(t), len(t) - len(trim(t, 500))))
     req=urllib.request.Request(BASE+'/v1/agent/commands', data=json.dumps(body).encode(), headers={'authorization':'Bearer '+TOK,'content-type':'application/json'}, method='POST')
     try:
         r=json.load(urllib.request.urlopen(req, timeout=60))
